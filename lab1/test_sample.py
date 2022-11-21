@@ -1,15 +1,16 @@
 import pytest
-from array import array
 from directory import Directory
 from binaryFile import BinaryFile
 from logTextFile import LogTextFile
 from bufferFile import BufferFile
+from types import NoneType
+
 
 
 class TestDirectory:
-    fatherDirectory = Directory('fatherDir')
+    fatherDirectory = Directory('fatherDir', 10)
 
-    def test_directoryCreation():
+    def test_directoryCreation(self):
         #arrange
         maxElements = 10
         name = 'name1'
@@ -20,14 +21,13 @@ class TestDirectory:
         assert directory.name == name
         assert directory.DIR_MAX_ELEMS == maxElements
         assert directory.elementsCount == 0
-        assert pytest.raises(OverflowError)
-
-        assert type(directory.listElements()) is list
+        assert type(directory.father) is NoneType
+        assert type(directory.listElements()) is str
 
     def test_directoryMove(self):
         #arrange
         directory = Directory('dir')
-        assert pytest.raises(OverflowError)
+        assert type(directory.father) is NoneType
 
         #act
         directory.move(self.fatherDirectory)
@@ -46,27 +46,27 @@ class TestDirectory:
         assert 'directory' not in locals()
 
 class TestBinary:
-    fatherDirectory = Directory('fatherDir')
+    fatherDirectory = Directory('fatherDir',10)
 
     def test_binaryCreation(self):
         #arrange
         name = 'name1'
-        content = 'We need light'
+        content = 'some file content blah blah blah'
         binary = BinaryFile(name, content, self.fatherDirectory)
 
         #act
         #assert
-        assert binary.name == name
+        assert binary.fileName == name
         assert binary.content == content
         assert binary.read() == content
-        assert binary.fatherDirectory == self.fatherDirectory
+        assert binary.father == self.fatherDirectory
 
     def test_binaryMove(self):
         #arrange
         name = 'name1'
-        content = 'We need light'
+        content = 'We need light!'
         binary = BinaryFile(name, content)
-        assert pytest.raises(OverflowError)
+        assert type(binary.father) is NoneType
 
         #act
         binary.move(self.fatherDirectory)
@@ -85,7 +85,7 @@ class TestBinary:
         assert 'binary' not in locals()
 
 class TestBuffer:
-    fatherDirectory = Directory('fatherDir')
+    fatherDirectory = Directory('fatherDir',10)
 
     def test_bufferCreation(self):
         #arrange
@@ -95,17 +95,17 @@ class TestBuffer:
 
         #act
         #assert
-        assert buffer.name == name
+        assert buffer.fileName == name
         assert buffer.MAX_BUF_FILE_SIZE == size
         assert pytest.raises(OverflowError)
-        assert buffer.fatherDirectory == self.fatherDirectory
+        assert buffer.father == self.fatherDirectory
 
     def test_bufferMove(self):
         #arrange
         name = 'name1'
-        content = 'We need light'
+        content = 'We need light!'
         buffer = BufferFile(name, content)
-        assert pytest.raises(OverflowError)
+        assert type(buffer.father) is NoneType
 
         #act
         buffer.move(self.fatherDirectory)
@@ -142,7 +142,7 @@ class TestBuffer:
         assert pytest.raises(OverflowError)
 
 class TestLog:
-    fatherDirectory = Directory('fatherDir')
+    fatherDirectory = Directory('fatherDir',10)
 
     def test_logCreation(self):
         #arrange
@@ -151,15 +151,15 @@ class TestLog:
 
         #act
         #assert
-        assert log.name == name
-        assert pytest.raises(OverflowError)
-        assert log.fatherDirectory == self.fatherDirectory
+        assert log.fileName == name
+        assert log.read() ==''
+        assert log.father == self.fatherDirectory
 
     def test_logMove(self):
         #arrange
         name = 'name1'
         log = LogTextFile(name)
-        assert pytest.raises(OverflowError)
+        assert type(log.father) is NoneType
 
         #act
         log.move(self.fatherDirectory)
@@ -190,4 +190,4 @@ class TestLog:
 
 
         #assert
-        assert log.read() == line1 + '\n' + line2
+        assert log.read() == line1 + '\n' + line2 + '\n'
