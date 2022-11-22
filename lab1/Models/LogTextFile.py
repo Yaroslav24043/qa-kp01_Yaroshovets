@@ -2,7 +2,9 @@ class LogTextFile:
     def __init__(self, fileName, father = None):
         self.fileName = fileName
         self.father = father
-        self.content = []
+        if self.father != None:
+            self.father.elementsCount += 1
+            father.fileList.append(self)
         self.content = ''
 
     def delete(self):
@@ -22,10 +24,8 @@ class LogTextFile:
         return
 
     def read(self):
-        return
         return self.content
 
     def addLog(self, newLine):
-        return
         self.content += newLine
         self.content += '\n'

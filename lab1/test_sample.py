@@ -64,7 +64,7 @@ class TestBinary:
     def test_binaryMove(self):
         #arrange
         name = 'name1'
-        content = 'We need light!'
+        content = 'some file content blah blah blah'
         binary = BinaryFile(name, content)
         assert type(binary.father) is NoneType
 
@@ -103,7 +103,7 @@ class TestBuffer:
     def test_bufferMove(self):
         #arrange
         name = 'name1'
-        content = 'We need light!'
+        content = 'some file content blah blah blah'
         buffer = BufferFile(name, content)
         assert type(buffer.father) is NoneType
 

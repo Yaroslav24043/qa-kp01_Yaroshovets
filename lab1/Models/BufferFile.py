@@ -3,6 +3,9 @@ class BufferFile:
         self.MAX_BUF_FILE_SIZE = maxSize
         self.fileName = fileName
         self.father = father
+        if self.father != None:
+            self.father.elementsCount += 1
+            father.fileList.append(self)
         self.content = []
 
     def __delete__(self):
@@ -24,7 +27,6 @@ class BufferFile:
         return
 
     def push(self, elem):
-        return
         if len(self.content) >= self.MAX_BUF_FILE_SIZE:
             print('Buffer is full')
             return
@@ -32,7 +34,6 @@ class BufferFile:
         self.content.append(elem)
 
     def consume(self):
-        return
         if len(self.content) >= 1:
             temp = self.content[0]
             self.content.pop(0)

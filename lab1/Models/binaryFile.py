@@ -1,10 +1,11 @@
 class BinaryFile:
     def __init__(self, fileName, content = None, father = None):
-        self.file_name = fileName
         self.fileName = fileName
         self.content = content
         self.father = father
-        self.info = content
+        if self.father != None:
+            self.father.elementsCount += 1
+            father.fileList.append(self)
 
     def __delete__(self):
         print(self.fileName +'file deleted')
@@ -25,5 +26,4 @@ class BinaryFile:
         return
 
     def read(self):
-        return
         return self.content
