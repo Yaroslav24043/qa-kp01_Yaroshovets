@@ -5,9 +5,15 @@ class Directory:
         self.name = dirName
         self.elementsCount = 0
         self.fileList = []
+        self.deleted = False
 
     def __delete__(self):
-        return {'message': self.name +'directory deleted'}
+       
+        if self.deleted is False:
+            self.deleted = True
+            return {'message': self.name +'directory deleted'}
+        else: 
+            return {'error': 'Directory is already deleted'}
 
     def __listElements__(self):
         answ = ''
@@ -16,21 +22,16 @@ class Directory:
                 answ += '==='
                 answ += item.__listElements__()
                 answ += '==='
-
             else:
                 answ += item.name
                 answ += ', ' 
-
         return answ
-
     def __move__(self, path):
         if (path.elementsCount >= path.DIR_MAX_ELEMS + 1):
             return {'error': 'Target directory is full'}
-
         if self.father != None:
             self.father.elementsCount -= 1
             self.father.fileList.pop(self.father.fileList.index(self))
-
         self.father = path
         self.father.fileList.append(self)
         self.father.elementsCount += 1 
