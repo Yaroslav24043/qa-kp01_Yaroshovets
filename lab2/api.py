@@ -97,7 +97,7 @@ class logTextApi(Resource):
         return self.logText.__move__(fatherDir)
     def patch(self):
         data = request.get_json()
-        return self.logText.__log__(data.line)
+        return self.logText.__log__(data["line"])
     def delete(self):
         return self.logText.__delete__()
 
