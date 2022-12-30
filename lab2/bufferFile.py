@@ -26,6 +26,7 @@ class BufferFile:
             return {'error': 'Buffer is full'}
 
         self.content.append(elem)
+        return {'content': self.content}
 
     def __consume__(self):
         if len(self.content) >= 1:
